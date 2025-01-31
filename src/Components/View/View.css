@@ -1,50 +1,79 @@
 .viewParentDiv {
-    padding-top: 4em;
-    display: flex;
-  }
-  .viewParentDiv .imageShowDiv {
-    padding: 16px;
-    width: 70vw;
-  }
-  .viewParentDiv .imageShowDiv img {
-    width: 65vw;
-    height: 85vh;
-  }
-  
-  .viewParentDiv .rightSection {
-    padding: 16px;
-    margin-top: 3em;
-    width: 30vw;
-  }
-  
-  .viewParentDiv .rightSection .productDetails :first-child {
-    font-weight: 700;
-    margin-bottom: 8px;
-    color: #002f34;
-    font-size: 34px;
-    line-height: 32px;
-    margin-bottom: 20px;
-  }
-  
-  .viewParentDiv .rightSection .productDetails {
-    border: 1px solid black;
-    padding: 6px;
-    border-radius: 6px;
-    margin-bottom: 2em;
-    width: 100%;
-  }
-  
-  .viewParentDiv .rightSection .contactDetails {
-    border: 1px solid black;
-    padding: 6px;
-    border-radius: 6px;
-  }
-  
-  .viewParentDiv .rightSection .contactDetails :first-child {
-    font-size: 20px;
-    line-height: 24px;
-    font-weight: 700;
-    color: #002f34;
-    font-weight: 400;
-    padding: 0;
-  }
+  display: flex;
+  padding-top: 4em;
+  justify-content: space-between; /* Ensures proper space between image and details */
+}
+
+.viewParentDiv .imageShowDiv {
+  padding: 16px;
+  width: 70%; /* Changed from 70vw to 70% for responsiveness */
+  display: flex;
+  justify-content: center; /* Centers image */
+  align-items: center;
+}
+
+.viewParentDiv .imageShowDiv img {
+  max-width: 100%; /* Ensures the image is responsive */
+  height: auto;
+  max-height: 85vh; /* Limits the image height */
+}
+
+.viewParentDiv .rightSection {
+  padding: 16px;
+  margin-top: 3em;
+  width: 30%; /* Changed from 30vw to 30% for responsiveness */
+}
+
+.viewParentDiv .rightSection .productDetails {
+  border: 1px solid #ddd; /* Light border for better visibility */
+  padding: 16px;
+  border-radius: 6px;
+  margin-bottom: 2em;
+  width: 100%;
+}
+
+.viewParentDiv .rightSection .productDetails p:first-child {
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #002f34;
+  font-size: 24px;
+  line-height: 32px;
+  margin-bottom: 20px;
+}
+
+.viewParentDiv .rightSection .productDetails span {
+  display: block;
+  margin-bottom: 10px;
+  color: #555; /* Lighter color for text */
+}
+
+.viewParentDiv .rightSection .contactDetails {
+  border: 1px solid #ddd; /* Light border for better visibility */
+  padding: 16px;
+  border-radius: 6px;
+  width: 100%;
+}
+
+.viewParentDiv .rightSection .contactDetails p {
+  font-size: 18px;
+  line-height: 24px;
+  color: #333;
+  margin: 6px 0;
+}
+
+.viewParentDiv .rightSection .contactDetails p:first-child {
+  font-weight: 700;
+  font-size: 20px;
+  color: #002f34;
+}
+
+.viewParentDiv .rightSection .contactDetails p:last-child {
+  font-weight: 400;
+  font-size: 18px;
+  color: #555;
+}
+
+.viewParentDiv img{
+  width: 600px;
+  height: 600px;
+}

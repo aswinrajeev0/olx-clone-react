@@ -1,5 +1,8 @@
 .postParentDiv {
     padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .moreView,
@@ -8,6 +11,7 @@
     padding: 16px;
     background-color: #ebeeef;
     border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .heading {
@@ -36,6 +40,7 @@
     overflow-x: auto;
     white-space: nowrap;
     padding-bottom: 10px;
+    flex-wrap: nowrap;  /* Ensure the cards stay in one line */
 }
 
 .card {
@@ -98,4 +103,45 @@
 
 .recommendations .heading span {
     font-size: 18px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .postParentDiv {
+        padding: 10px;
+    }
+
+    .cards {
+        flex-direction: row;
+        gap: 10px;
+        overflow-x: auto; /* To keep the horizontal scrolling */
+    }
+
+    .card {
+        width: 180px; /* Adjust card width for mobile */
+        height: auto; /* Let the height adjust based on content */
+    }
+
+    .card .image img {
+        height: 120px; /* Adjust image height for mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .heading span {
+        font-size: 16px;
+    }
+
+    .card .content .rate {
+        font-size: 16px;
+    }
+
+    .card .content .kilometer,
+    .card .content .name {
+        font-size: 12px;
+    }
+
+    .card .date {
+        font-size: 10px;
+    }
 }
