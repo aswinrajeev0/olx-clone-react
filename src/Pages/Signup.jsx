@@ -5,6 +5,7 @@ import Logo from '../assets/OlxLogo';
 import { useNavigate } from 'react-router-dom';
 import './Signup.css';
 import { FirebaseContext } from '../store/Context';
+import { toast } from "react-toastify";
 
 export default function Signup() {
 
@@ -12,12 +13,51 @@ export default function Signup() {
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [password, setPassword] = useState('')
+  const [errors, setErrors] = useState({});
 
   const { auth, db } = useContext(FirebaseContext)
   const navigate = useNavigate()
 
+  function validateForm() {
+    let isValid = true;
+    const newErrors = {};
+
+    if (!username.trim()) {
+      newErrors.username = "Username is required";
+      isValid = false;
+    }
+
+    if (!email.trim()) {
+      newErrors.email = "Email is required";
+      isValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = "Invalid email format";
+      isValid = false;
+    }
+
+    if (!phone.trim()) {
+      newErrors.phone = "Phone number is required";
+      isValid = false;
+    } else if (!/^\d{10}$/.test(phone)) {
+      newErrors.phone = "Phone number must be 10 digits";
+      isValid = false;
+    }
+
+    if (!password.trim()) {
+      newErrors.password = "Password is required";
+      isValid = false;
+    } else if (password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  }
+
   async function handleSubmit(e) {
     e.preventDefault()
+    if (!validateForm()) return;
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
@@ -35,6 +75,7 @@ export default function Signup() {
       navigate('/login')
 
     } catch (error) {
+      toast.error(error.code.split('/')[1].split('-').join(' '))
       console.error('Error signing up:', error.message);
     }
   }
@@ -55,6 +96,7 @@ export default function Signup() {
             value={username}
             onChange={e => setUsername(e.target.value)}
           />
+          {errors.username && <p className="error" style={{color:"red"}}>{errors.username}</p>}
           <br />
           <label htmlFor="email">Email</label>
           <br />
@@ -66,6 +108,7 @@ export default function Signup() {
             value={email}
             onChange={e => setEmail(e.target.value)}
           />
+          {errors.email && <p className="error" style={{color:"red"}}>{errors.email}</p>}
           <br />
           <label htmlFor="phone">Phone</label>
           <br />
@@ -77,6 +120,7 @@ export default function Signup() {
             value={phone}
             onChange={e => setPhone(e.target.value)}
           />
+          {errors.phone && <p className="error" style={{color:"red"}}>{errors.phone}</p>}
           <br />
           <label htmlFor="password">Password</label>
           <br />
@@ -88,6 +132,9 @@ export default function Signup() {
             value={password}
             onChange={e => setPassword(e.target.value)}
           />
+          {errors.password && <p className="error" style={{color:"red"}}>{errors.password}</p>}
+
+          {errors.firebase && <p className="error" style={{color:"red"}}>{errors.firebase}</p>}
           <br />
           <br />
           <button>Signup</button>

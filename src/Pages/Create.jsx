@@ -2,7 +2,6 @@ import React, { Fragment, useContext, useState } from 'react';
 import './Create.css';
 import Header from '../Components/Header/Header';
 import { FirebaseContext, AuthContext } from '../store/Context';
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { collection, doc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 

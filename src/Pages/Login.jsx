@@ -4,23 +4,58 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../assets/OlxLogo';
 import '../Components/Login/Login.css';
+import { toast } from 'react-toastify';
 
 function Login() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errors,setErrors] = useState({})
   const navigate = useNavigate()
 
-  const {auth} = useContext(FirebaseContext);
+  const { auth } = useContext(FirebaseContext);
 
-  async function handleSubmit(e){
+  function validateForm() {
+    let isValid = true;
+    const newErrors = {};
+
+    if (!email.trim()) {
+      newErrors.email = "Email is required";
+      isValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = "Invalid email format";
+      isValid = false;
+    }
+
+    if (!password.trim()) {
+      newErrors.password = "Password is required";
+      isValid = false;
+    } else if (password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  }
+
+  async function handleSubmit(e) {
     e.preventDefault()
+    if(!validateForm()) return;
+    if (email.trim() === '') {
+      return
+    }
+
+    if (password.trim() === '') {
+      return
+    }
+
     try {
-      await signInWithEmailAndPassword(auth,email,password)
-      alert("Logged in")
+      await signInWithEmailAndPassword(auth, email, password)
       navigate('/')
     } catch (error) {
-      alert(error.message)
+      toast.error(error.code.split('/')[1].split('-').join(' '))
+      console.log(error)
     }
   }
 
@@ -40,6 +75,7 @@ function Login() {
             value={email}
             onChange={e => setEmail(e.target.value)}
           />
+          {errors.email && <p className="error" style={{ color: "red" }}>{errors.email}</p>}
           <br />
           <label htmlFor="lname">Password</label>
           <br />
@@ -51,6 +87,7 @@ function Login() {
             value={password}
             onChange={e => setPassword(e.target.value)}
           />
+          {errors.password && <p className="error" style={{ color: "red" }}>{errors.password}</p>}
           <br />
           <br />
           <button>Login</button>
